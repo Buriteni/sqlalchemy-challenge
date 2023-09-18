@@ -21,6 +21,31 @@ In this section, I used Python and SQLAlchemy to do a basic climate analysis and
 4. Load the query results into a Pandas DataFrame. Explicitly set the column names.
 5. Sort the DataFrame values by "date".
 
+### Station Analysis
+
+1. Design a query to calculate the total number of stations in the dataset.
+2. Design a query to find the most-active stations (that is, the stations that have the most rows). To do so, complete the following steps:
+    - List the stations and observation counts in descending order.
+    - Answer the following question: which station id has the greatest number of observations?
+3. Design a query that calculates the lowest, highest, and average temperatures that filters on the most-active station id found in the previous query.
+4. Design a query to get the previous 12 months of temperature observation (TOBS) data. To do so, complete the following steps:
+    - Filter by the station that has the greatest number of observations.
+    - Query the previous 12 months of TOBS data for that station.
+    - Plot the results as a histogram with bins=12
+
+## Part 2: Design Your Climate App
+Now that I've completed the initial analysis, I’ll design a Flask API based on the queries that I just developed.
+
+
+# Resources
+- AskBCS
+- Tutor
+- Previous Assingments
+- https://docs.sqlalchemy.org/en/20/dialects/sqlite.html
+- https://dev.to/emma_donery/python-flask-app-routing-3l57#:~:text=The%20route()%20decorator%20in,bind%20URL%20to%20a%20function.&text=Tip%3A%20You%20can%20handle%20multiple,rules%20for%20the%20same%20function.
+
+
+
 
 
 

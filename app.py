@@ -44,6 +44,7 @@ def  welcome():
       f"/api/v1.0/tobs<br/>"
       f"/api/v1.0/start<br/>"
       f"/api/v1.0/start/end<br/>"
+      f"42"
    )
 
 @app.route("/api/v1.0/precipitation")
@@ -62,11 +63,11 @@ def precipitation():
     # """""Return JSON"""""
    return jsonify(prcp_dict)
 
-if __name__ == "__main__":
-    app.run(debug=True)
 
 @app.route("/api/v1.0/stations")
 def stations():
+   session = Session(engine)
+
 #    """""Return Stations"""""
    Station = Base.classes.station
    results = session.query(Station.station).all()
@@ -80,6 +81,29 @@ def stations():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+@app.route("/api/v1.0/tob")
+def stations():
+   session = Session(engine)
+
+#    """""Query the dates and temperature observations of the most-active station for the previous year of data."""""
+   Station = Base.classes.station
+   last_date = session.query(measurement.date).order_by(measurement.date.desc()).first()[0]
+last_year = dt.datetime.strptime(last_date, "%Y-%m-%d") - dt.timedelta(days=365)
+temp_query = session.query(measurement.date, measurement.tobs).\
+    filter(measurement.station == most_active_station).\
+    filter(measurement.date >= last_year)
+
+#    """""Convert the query result to a dictionary using date as the key and prcp as the value"""""
+temp_df = pd.read_sql(temp_query.statement, temp_query.session.bind)
+temp_df.set_index("date", inplace=True)
+
+    # """""Return JSON"""""
+return jsonify(stations = stations)
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
 
 
 
